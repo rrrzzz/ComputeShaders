@@ -31,7 +31,9 @@ public class GraphPlotter : MonoBehaviour
         var widthOffset = _range / _widthResolution;
 
         var counter = 0;
-        _center = Instantiate(_pointPrefab, Vector3.zero, Quaternion.identity);
+        _center = Instantiate(_pointPrefab, 
+            new Vector3(0, function(functionStep) * _heightMultiplier, 0), Quaternion.identity, transform);
+        _center.name = $"Sphere_{counter++}";
         
         for (int i = 1; i < _widthResolution; i++)
         {
@@ -60,26 +62,29 @@ public class GraphPlotter : MonoBehaviour
         var widthOffset = _range / _widthResolution;
         var centerPos = _center.transform.position;
 
-        centerPos.y = _function(_functionStep + _increment);
+        centerPos.y = _function(_functionStep + _increment) * _heightMultiplier;
         _center.transform.position = centerPos;
+        var passedStepsCount = 0;
         for (int i = 1; i < _widthResolution; i++)
         {
             var r = i * widthOffset;
             var totalSteps = r * _circleResolution;
 
             var toInt = Mathf.FloorToInt(totalSteps);
-            var intSteps = totalSteps / toInt == 0 ? toInt : toInt + 1;
+            
+            var intSteps = totalSteps % toInt == 0 ? toInt : toInt + 1;
             
             var y = _function(r * _functionStep + _increment) * _heightMultiplier;
             
-            for (int j = 0; j < totalSteps; j++)
+            for (int j = 0; j < intSteps; j++)
             {
-                var currentIndex = j + (i - 1) * intSteps;
+                var currentIndex = j + passedStepsCount;
                 var sphere = _gos[currentIndex];
                 var pos = sphere.transform.position;
                 pos.y = y;
                 sphere.transform.position = pos;
             }
+            passedStepsCount += intSteps;
         }
         
         // for (int i = 0; i < _resolution; i++)
