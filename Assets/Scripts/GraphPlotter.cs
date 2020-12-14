@@ -13,6 +13,8 @@ public class GraphPlotter : MonoBehaviour
     [SerializeField] private float _heightMultiplier;
     [Range(1,100)]
     [SerializeField] private int _circleResolution;
+    [SerializeField] private float _rippleMultiplier;
+    [SerializeField] private float _downsizeMultiplier = 0.1f;
     [SerializeField] private float _speed;
     
     
@@ -32,7 +34,7 @@ public class GraphPlotter : MonoBehaviour
 
         var counter = 0;
         _center = Instantiate(_pointPrefab, 
-            new Vector3(0, function(functionStep) * _heightMultiplier, 0), Quaternion.identity, transform);
+            new Vector3(0, function(functionStep * _rippleMultiplier) * _heightMultiplier, 0), Quaternion.identity, transform);
         _center.name = $"Sphere_{counter++}";
         
         for (int i = 1; i < _widthResolution; i++)
@@ -41,7 +43,7 @@ public class GraphPlotter : MonoBehaviour
             var totalSteps = r * _circleResolution;
             var stepAngle = Mathf.PI * 2 / totalSteps;
 
-            var y = function(r * functionStep) * _heightMultiplier;
+            var y = function(r * functionStep * _rippleMultiplier) * _heightMultiplier;
             
             for (int j = 0; j < totalSteps; j++)
             {
@@ -62,29 +64,29 @@ public class GraphPlotter : MonoBehaviour
         var widthOffset = _range / _widthResolution;
         var centerPos = _center.transform.position;
 
-        centerPos.y = _function(_functionStep + _increment) * _heightMultiplier;
+        centerPos.y = _function(_functionStep * _rippleMultiplier + _increment) * _heightMultiplier;
         _center.transform.position = centerPos;
         var passedStepsCount = 0;
+        var heightDownsize = 1f;
         for (int i = 1; i < _widthResolution; i++)
         {
+            heightDownsize += _downsizeMultiplier;
             var r = i * widthOffset;
             var totalSteps = r * _circleResolution;
 
-            var toInt = Mathf.FloorToInt(totalSteps);
-            
-            var intSteps = totalSteps % toInt == 0 ? toInt : toInt + 1;
-            
-            var y = _function(r * _functionStep + _increment) * _heightMultiplier;
-            
-            for (int j = 0; j < intSteps; j++)
+            var y = _function(r * _functionStep * _rippleMultiplier + _increment) * (_heightMultiplier / heightDownsize);
+            var currentCounter = 0;
+            for (int j = 0; j < totalSteps; j++)
             {
+                currentCounter++;
                 var currentIndex = j + passedStepsCount;
                 var sphere = _gos[currentIndex];
                 var pos = sphere.transform.position;
                 pos.y = y;
                 sphere.transform.position = pos;
             }
-            passedStepsCount += intSteps;
+
+            passedStepsCount += currentCounter;
         }
         
         // for (int i = 0; i < _resolution; i++)
