@@ -8,14 +8,14 @@ namespace Editor
     public class GraphPlotterEditor : UnityEditor.Editor
     {
         private float _functionMultiplier = 0;
-        private string _defaultString = "-10";
+        private string _defaultString = "10";
         
         public override void OnInspectorGUI()
         {
             DrawDefaultInspector();
             var plotter = target as GraphPlotter;
 
-            GUILayout.Label("Degrees");
+            GUILayout.Label("Function step in degrees");
             _defaultString = GUILayout.TextField(_defaultString);
 
             if (float.TryParse(_defaultString, out var val))

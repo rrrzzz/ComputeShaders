@@ -360,13 +360,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _pointPrefab: {fileID: 915517651258814643, guid: 4ac0b83613cdef440a74c14d0c595eb2, type: 3}
-  _widthResolution: 100
+  _widthResolution: 45
   _range: 63
-  _heightMultiplier: 2.9
-  _circleResolution: 6
+  _heightMultiplier: 8.36
+  _circleResolution: 3
   _rippleMultiplier: 1.5
   _downsizeMultiplier: 0.1
-  _speed: 3.39
+  _speed: 0.3
+  _cycles: 5
+  _circleOffset: 0.82
+  _radius: 18.36
+  _plotType: 1
 --- !u!4 &1244451475
 Transform:
   m_ObjectHideFlags: 0
