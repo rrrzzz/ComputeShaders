@@ -69,7 +69,6 @@ public class GraphPlotter : MonoBehaviour
             }
             case PlotType.SinSphere:
             {
-                
                 var totalSteps = (float)Math.PI * 2 * _radius / _circleOffset;
 
                 var withHeightOffset = (_heightMultiplier * 4) / totalSteps + _circleOffset;
@@ -85,6 +84,21 @@ public class GraphPlotter : MonoBehaviour
                     var x = Mathf.Cos(angleSpacing) * _radius;
                     var z = Mathf.Sin(angleSpacing) * _radius;
                     
+                    var go = Instantiate(_pointPrefab, new Vector3(x, y, z), Quaternion.identity, transform);
+                    go.name = $"Sphere_{counter++}";
+                    _gos.Add(go);
+                }
+                break;
+            }
+            case PlotType.SimpleSin:
+            {
+                var widthOffset = _range / _widthResolution;
+                for (int i = 0; i < _widthResolution; i++)
+                {
+                    var y = function(functionStep * i) * _heightMultiplier;
+                    var x = widthOffset * i;
+                    var z = 0;
+                
                     var go = Instantiate(_pointPrefab, new Vector3(x, y, z), Quaternion.identity, transform);
                     go.name = $"Sphere_{counter++}";
                     _gos.Add(go);
@@ -146,6 +160,19 @@ public class GraphPlotter : MonoBehaviour
                 }
                 break;
             }
+            
+            case PlotType.SimpleSin:
+            {
+                for (int i = 0; i < _widthResolution; i++)
+                {
+                    var y = _function(_functionStep * i + _increment) * _heightMultiplier;
+                    var go = _gos[i];
+                    var pos = go.transform.position;
+                    pos.y = y;
+                    go.transform.position = pos;
+                }
+                break;
+            }
         }
     }
 
@@ -154,12 +181,12 @@ public class GraphPlotter : MonoBehaviour
         if (_center != null) DestroyImmediate(_center);
         _gos.ForEach(DestroyImmediate);
         _gos.Clear();
-        
     }
 }
 
 public enum PlotType
 {
+    SimpleSin,
     Ripple,
     SinSphere
 }
