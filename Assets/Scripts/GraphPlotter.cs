@@ -96,6 +96,7 @@ public class GraphPlotter : MonoBehaviour
                 for (int i = 0; i < _widthResolution; i++)
                 {
                     var y = function(functionStep * i) * _heightMultiplier;
+                    y += function(2 * functionStep * i) / 2 * _heightMultiplier;
                     var x = widthOffset * i;
                     var z = 0;
                 
@@ -166,6 +167,7 @@ public class GraphPlotter : MonoBehaviour
                 for (int i = 0; i < _widthResolution; i++)
                 {
                     var y = _function(_functionStep * i + _increment) * _heightMultiplier;
+                    y += _function(_functionStep * i * 2 + _increment) / 2 * _heightMultiplier;
                     var go = _gos[i];
                     var pos = go.transform.position;
                     pos.y = y;
