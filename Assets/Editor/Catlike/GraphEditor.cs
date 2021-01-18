@@ -17,6 +17,11 @@ namespace Editor.Catlike
             {
                 graph.Plot();    
             }
+            
+            if (GUILayout.Button("Clear"))
+            {
+                graph.ResetGraph();    
+            }
         }
     }
 }

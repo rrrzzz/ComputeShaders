@@ -292,8 +292,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: -0.14225136, y: 0.031764835, z: -0.004567431, w: -0.98931026}
-  m_LocalPosition: {x: 45.44266, y: 32.91585, z: -105.48863}
+  m_LocalRotation: {x: -0.10958943, y: -0.0008976022, z: 0.00009877584, w: -0.9939766}
+  m_LocalPosition: {x: -0.015756834, y: 0.6, z: -1.94}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -330,7 +330,7 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
---- !u!1 &1244451473
+--- !u!1 &2135040000
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -338,98 +338,44 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1244451475}
-  - component: {fileID: 1244451474}
+  - component: {fileID: 2135040002}
+  - component: {fileID: 2135040001}
   m_Layer: 0
-  m_Name: Plotter
+  m_Name: CatlikePlotter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1244451474
+--- !u!114 &2135040001
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1244451473}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1acc9d1ddb20b4d488ac667563113b85, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _pointPrefab: {fileID: 915517651258814643, guid: 4ac0b83613cdef440a74c14d0c595eb2, type: 3}
-  _widthResolution: 45
-  _range: 63
-  _heightMultiplier: 8.36
-  _circleResolution: 3
-  _rippleMultiplier: 1.5
-  _downsizeMultiplier: 0.1
-  _speed: 0.3
-  _cycles: 5
-  _circleOffset: 0.82
-  _radius: 18.36
-  _plotType: 0
---- !u!4 &1244451475
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1244451473}
-  m_LocalRotation: {x: -0.14225098, y: 0.03176481, z: -0.004567429, w: -0.98931026}
-  m_LocalPosition: {x: -1.6863365, y: 14.309686, z: -53.81722}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1484207226
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1484207228}
-  - component: {fileID: 1484207227}
-  m_Layer: 0
-  m_Name: CatLikePlotter
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1484207227
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1484207226}
+  m_GameObject: {fileID: 2135040000}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c6207ddb65f449728aba50316a14eeec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _range: 20
-  _resolution: 40
-  _height: 4.25
-  _pointsCount: 20
+  _range: 0
+  _scale: 1
+  _height: 1
+  _pointsCount: 100
   _pointPrefab: {fileID: 3593535317279458060, guid: 4ac0b83613cdef440a74c14d0c595eb2, type: 3}
---- !u!4 &1484207228
+  _functionType: 2
+--- !u!4 &2135040002
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1484207226}
+  m_GameObject: {fileID: 2135040000}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
