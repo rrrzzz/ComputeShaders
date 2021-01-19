@@ -69,15 +69,6 @@ namespace Catlike
                     point.localPosition = position;
                 }
             }
-            foreach (var point in _points)
-            {
-                var pos = point.localPosition;
-                
-                pos.y = _function(pos.x, 0, time);
-                
-                pos.y *= _height;
-                point.localPosition = pos;
-            }
         }
 
         public void ResetGraph()
@@ -90,12 +81,5 @@ namespace Catlike
             }
             _points = null;
         }
-    }
-    
-    public enum FunctionType
-    {
-        Wave,
-        MultiWave,
-        Ripple
     }
 }

@@ -28,4 +28,11 @@ namespace Catlike
             return y;
         }
     }
+    
+    public enum FunctionType
+    {
+        Wave,
+        MultiWave,
+        Ripple
+    }
 }
