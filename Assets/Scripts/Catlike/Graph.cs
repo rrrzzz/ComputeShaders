@@ -11,39 +11,41 @@ namespace Catlike
         [SerializeField] private int _pointsCount = 10;
         [SerializeField] Transform _pointPrefab;
         [SerializeField] private FunctionType _functionType;
+        [SerializeField] private float _speed = 1;
         
-
-        private Transform[] _points = null;
+        private Transform[,] _points;
+        private Func<float, float, float, float> _function;
 
         public void Plot()
         {
-            // var offset = _range / _resolution;
-            // ResetGraph();
-            // var count = Mathf.RoundToInt(_resolution);
-            // _points = new Transform[count];
-            // for (int i = 0; i < count; i++)
-            // {
-            //     var point = Instantiate(_pointPrefab, transform);
-            //     point.localPosition = new Vector3(i * offset, 0, 0);
-            //     point.name = "Sphere " + i;
-            //     _points[i] = point;
-            // }
+            _function = FunctionLib.GetFunction(_functionType);
             ResetGraph();
             
-            _points = new Transform[_pointsCount];
+            _points = new Transform[_pointsCount, _pointsCount];
             var position = Vector3.zero;
+            var divisor = _pointsCount / 2f;
+            var scale = Vector3.one * _scale / divisor;
+            
             for (int i = 0; i < _pointsCount; i++)
             {
-                var point = Instantiate(_pointPrefab, transform, false);
-                var divisor = _pointsCount / 2f;
-
                 position.x = (i + 0.5f) / divisor - 1;
-                // position.y = position.x * position.x;
-                
-                point.localScale = Vector3.one * _scale / divisor;
-                point.localPosition = position;
-                point.name = "Sphere " + i;
-                _points[i] = point;
+   
+                for (int j = 0; j < _pointsCount; j++)
+                {
+                    var point = Instantiate(_pointPrefab, transform, false);
+                    
+                    position.y = _function(position.x, 0, 0);
+                    position.y *= _height;
+                    
+                    position.z = (j + 0.5f) / divisor - 1;
+                    
+                    point.localPosition = position;
+                    point.localScale = scale;
+
+                    var pointIndex = (j + i * _pointsCount);
+                    point.name = $"Sphere {pointIndex}";
+                    _points[i,j] = point;
+                }
             }
         }
 
@@ -51,41 +53,45 @@ namespace Catlike
         {
             if (_points == null) return;
             
-            var time = Time.time;
+            var time = Time.time * _speed;
+            
+            for (int i = 0; i < _pointsCount; i++)
+            {
+                for (int j = 0; j < _pointsCount; j++)
+                {
+                    var point = _points[i, j];
+                    var position = point.localPosition;
+                    
+                    var y = _function(position.x, 0, time);
+                    position.y *= _height;
+
+                    position.y = y;
+                    point.localPosition = position;
+                }
+            }
             foreach (var point in _points)
             {
                 var pos = point.localPosition;
-
-                switch (_functionType)
-                {
-                    case FunctionType.Wave:
-                        pos.y = FunctionLib.Wave(pos.x, time);
-                        break;
-                    case FunctionType.MultiWave:
-                        pos.y = FunctionLib.MultiWave(pos.x, time);
-                        break;
-                    case FunctionType.Ripple:
-                        pos.y = FunctionLib.Ripple(pos.x, time);
-                        break;
-                    default:
-                        throw new ArgumentOutOfRangeException();
-                }
-
+                
+                pos.y = _function(pos.x, 0, time);
+                
                 pos.y *= _height;
                 point.localPosition = pos;
             }
         }
 
-        public void ResetGraph() 
+        public void ResetGraph()
         {
-            if (_points != null)
-            {
-                Array.ForEach(_points, x=> DestroyImmediate(x.gameObject));
-                _points = null;
-            }
-        } 
-    }
+            if (_points == null) return;
 
+            foreach (var point in _points)
+            {
+                DestroyImmediate(point.gameObject);
+            }
+            _points = null;
+        }
+    }
+    
     public enum FunctionType
     {
         Wave,

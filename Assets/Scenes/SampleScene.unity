@@ -293,7 +293,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   m_LocalRotation: {x: -0.10958943, y: -0.0008976022, z: 0.00009877584, w: -0.9939766}
-  m_LocalPosition: {x: -0.015756834, y: 0.6, z: -1.94}
+  m_LocalPosition: {x: -0.015756834, y: 0.6, z: -4.46}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -362,9 +362,10 @@ MonoBehaviour:
   _range: 0
   _scale: 1
   _height: 1
-  _pointsCount: 100
+  _pointsCount: 20
   _pointPrefab: {fileID: 3593535317279458060, guid: 4ac0b83613cdef440a74c14d0c595eb2, type: 3}
-  _functionType: 2
+  _functionType: 0
+  _speed: 1
 --- !u!4 &2135040002
 Transform:
   m_ObjectHideFlags: 0
