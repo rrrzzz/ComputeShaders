@@ -13,39 +13,25 @@ namespace Catlike
         [SerializeField] private FunctionType _functionType;
         [SerializeField] private float _speed = 1;
         
-        private Transform[,] _points;
-        private Func<float, float, float, float> _function;
+        private Transform[] _points;
+        private float _divisor;
+        private Func<float, float, float, Vector3> _function;
 
         public void Plot()
         {
             _function = FunctionLib.GetFunction(_functionType);
             ResetGraph();
             
-            _points = new Transform[_pointsCount, _pointsCount];
-            var position = Vector3.zero;
-            var divisor = _pointsCount / 2f;
-            var scale = Vector3.one * _scale / divisor;
+            _points = new Transform[_pointsCount * _pointsCount];
+            _divisor = _pointsCount / 2f;
+            var scale = Vector3.one * _scale / _divisor;
             
-            for (int i = 0; i < _pointsCount; i++)
+            for (int i = 0; i < _pointsCount * _pointsCount; i++)
             {
-                position.x = (i + 0.5f) / divisor - 1;
-   
-                for (int j = 0; j < _pointsCount; j++)
-                {
-                    var point = Instantiate(_pointPrefab, transform, false);
-                    
-                    position.y = _function(position.x, 0, 0);
-                    position.y *= _height;
-                    
-                    position.z = (j + 0.5f) / divisor - 1;
-                    
-                    point.localPosition = position;
-                    point.localScale = scale;
-
-                    var pointIndex = (j + i * _pointsCount);
-                    point.name = $"Sphere {pointIndex}";
-                    _points[i,j] = point;
-                }
+                var point = Instantiate(_pointPrefab, transform, false);
+                point.localScale = scale;
+                point.name = $"Sphere {i}";
+                _points[i] = point;
             }
         }
 
@@ -55,19 +41,20 @@ namespace Catlike
             
             var time = Time.time * _speed;
             
-            for (int i = 0; i < _pointsCount; i++)
+            var v = 0.5f / _divisor - 1;
+            for (int i = 0, x = 0, z = 0; i < _pointsCount * _pointsCount; i++, x++)
             {
-                for (int j = 0; j < _pointsCount; j++)
+                if (x == _pointsCount)
                 {
-                    var point = _points[i, j];
-                    var position = point.localPosition;
-                    
-                    var y = _function(position.x, 0, time);
-                    position.y *= _height;
-
-                    position.y = y;
-                    point.localPosition = position;
+                    x = 0;
+                    z += 1;
+                    v = (z + 0.5f) / _divisor - 1;
                 }
+                
+                var u = (x + 0.5f) / _divisor - 1;
+                var point = _points[i, j];
+                var outputPosition = _function(u, v, time);
+                point.localPosition = outputPosition;
             }
         }
 
