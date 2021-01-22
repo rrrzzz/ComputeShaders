@@ -52,7 +52,7 @@ namespace Catlike
                 }
                 
                 var u = (x + 0.5f) / _divisor - 1;
-                var point = _points[i, j];
+                var point = _points[i];
                 var outputPosition = _function(u, v, time);
                 point.localPosition = outputPosition;
             }

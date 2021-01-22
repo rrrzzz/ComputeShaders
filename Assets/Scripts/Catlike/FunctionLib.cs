@@ -7,7 +7,7 @@ namespace Catlike
     public static class FunctionLib
     {
         private static readonly Func<float, float, float, Vector3>[] FuncTypes = 
-            { Wave, MultiWave, Ripple };
+            { Wave, MultiWave, Ripple, Sphere, Torus, TorusAwesome };
         
         public static Func<float, float, float, Vector3> GetFunction(FunctionType functionType) => 
             FuncTypes[(int) functionType];
@@ -52,12 +52,51 @@ namespace Catlike
             
             return p;
         }
+        
+        private static Vector3 Sphere(float u, float v, float t)
+        {
+            Vector3 p;
+            var r = 0.9f + 0.1f * Sin(6 * u + 4 * v * PI + t);
+            var s = r * Cos(v * PI / 2);
+            p.x = s * Sin(PI * u);
+            p.y = r * Sin(v * PI / 2);
+            p.z = s * Cos(PI * u);
+            
+            return p;
+        }
+        
+        private static Vector3 Torus(float u, float v, float t)
+        {
+            Vector3 p;
+            var r = 1f;
+            var s = 2 + r * Cos(v * PI);
+            p.x = s * Sin(PI * u);
+            p.y = r * Sin(v * PI);
+            p.z = s * Cos(PI * u);
+            
+            return p;
+        }
+        
+        private static Vector3 TorusAwesome(float u, float v, float t)
+        {
+            Vector3 p;
+            var r = Cos(PI * 2 * v + t);
+            var s = 1 + r * Cos(v * PI);
+            p.x = s * Sin(PI * u);
+            p.y = r * Sin(v * PI);
+            p.z = s * Cos(PI * u);
+            
+            return p;
+        }
     }
     
     public enum FunctionType
     {
         Wave,
         MultiWave,
-        Ripple
+        Ripple, 
+        Sphere,
+        Torus, 
+        TorusAwesome
     }
 }

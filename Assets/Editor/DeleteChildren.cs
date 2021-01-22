@@ -9,9 +9,11 @@ namespace Editor
         private static void DeleteAllChildren()
         {
             var parent = Selection.activeGameObject.transform;
-            for (int i = 0; i < parent.childCount; i++)
+            var components = parent.GetComponentsInChildren<MeshFilter>();
+
+            foreach (var component in components)
             {
-                DestroyImmediate(parent.GetChild(i).gameObject);
+                DestroyImmediate(component.gameObject);
             }
         }
     }
