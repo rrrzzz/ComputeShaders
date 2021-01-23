@@ -56,11 +56,11 @@ namespace Catlike
         private static Vector3 Sphere(float u, float v, float t)
         {
             Vector3 p;
-            var r = 0.9f + 0.1f * Sin(6 * u + 4 * v * PI + t);
-            var s = r * Cos(v * PI / 2);
-            p.x = s * Sin(PI * u);
-            p.y = r * Sin(v * PI / 2);
-            p.z = s * Cos(PI * u);
+           
+            var r = Cos(v * PI / 2);
+            p.x = r * Sin(PI * u);
+            p.y = Sin(v * PI / 2);
+            p.z = r * Cos(PI * u);
             
             return p;
         }
@@ -68,10 +68,11 @@ namespace Catlike
         private static Vector3 Torus(float u, float v, float t)
         {
             Vector3 p;
-            var r = 1f;
-            var s = 2 + r * Cos(v * PI);
+            var rOuter = 0.7f + 0.1f * Sin(PI * (6f * u + 0.5f * t));
+            var rWidth = 0.15f + 0.05f * Sin(PI * (8f * u + 4f * v + 2f * t));
+            var s = rOuter + rWidth * Cos(v * PI);
             p.x = s * Sin(PI * u);
-            p.y = r * Sin(v * PI);
+            p.y = rWidth * Sin(v * PI);
             p.z = s * Cos(PI * u);
             
             return p;
@@ -81,7 +82,7 @@ namespace Catlike
         {
             Vector3 p;
             var r = Cos(PI * 2 * v + t);
-            var s = 1 + r * Cos(v * PI);
+            var s = 0.05f + 0.6f + r * Cos(v * PI);
             p.x = s * Sin(PI * u);
             p.y = r * Sin(v * PI);
             p.z = s * Cos(PI * u);
