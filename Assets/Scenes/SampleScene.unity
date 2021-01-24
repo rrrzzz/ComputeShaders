@@ -330,6 +330,56 @@ MonoBehaviour:
   m_RequiresDepthTexture: 0
   m_RequiresColorTexture: 0
   m_Version: 2
+--- !u!1 &1588507143
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1588507145}
+  - component: {fileID: 1588507144}
+  m_Layer: 0
+  m_Name: CakePlotterGpu
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1588507144
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1588507143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 630f3912246cba84c96ce418802d392a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _functionShader: {fileID: 7200000, guid: 8d48a5008c3c8664eadc961d13d82122, type: 3}
+  _scale: 1
+  _pointsCount: 100
+  _functionType: 0
+  _speed: 1
+  _mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
+  _material: {fileID: 2100000, guid: 021f6ef2fa4ac1145a115d0a1ffc3fcf, type: 2}
+--- !u!4 &1588507145
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1588507143}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 18.518469, y: -11.356476, z: -33.750187}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2135040000
 GameObject:
   m_ObjectHideFlags: 0
@@ -346,7 +396,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2135040001
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -359,13 +409,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6207ddb65f449728aba50316a14eeec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _range: 0
   _scale: 1.5
-  _height: 1
   _pointsCount: 100
   _pointPrefab: {fileID: 3593535317279458060, guid: 4ac0b83613cdef440a74c14d0c595eb2, type: 3}
-  _functionType: 4
+  _functionType: 5
   _speed: 1
+  _isTransitionEnabled: 0
+  _transitionTime: 1
+  _functionShowingTime: 1
 --- !u!4 &2135040002
 Transform:
   m_ObjectHideFlags: 0

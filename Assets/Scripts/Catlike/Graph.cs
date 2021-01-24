@@ -5,18 +5,20 @@ namespace Catlike
 {
     public class Graph : MonoBehaviour
     {
-        [SerializeField] private float _range;
         [SerializeField] private float _scale = 1;
-        [SerializeField] private float _height = 1;
-        [SerializeField] private int _pointsCount = 10;
+        [SerializeField] private int _pointsCount = 100;
         [SerializeField] Transform _pointPrefab;
         [SerializeField] private FunctionType _functionType;
         [SerializeField] private float _speed = 1;
-        
+        [SerializeField] private bool _isTransitionEnabled;
+        [SerializeField] private float _transitionTime = 1;
+        [SerializeField] private float _functionShowingTime = 1;
+
         private Transform[] _points;
         private float _divisor;
         private Func<float, float, float, Vector3> _function;
 
+        //TODO add lerped transition between all functions with transition duration and func showing duration
         public void Plot()
         {
             _function = FunctionLib.GetFunction(_functionType);
