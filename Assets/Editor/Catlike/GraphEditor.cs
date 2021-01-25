@@ -1,5 +1,4 @@
-﻿using Catlike;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
 namespace Editor.Catlike
