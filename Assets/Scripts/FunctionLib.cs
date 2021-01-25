@@ -16,7 +16,7 @@ public static class FunctionLib
         p.x = u;
         p.y = Mathf.Sin(Mathf.PI * (u + v - t));
         p.z = v;
-
+                                           
         return p;
     } 
 

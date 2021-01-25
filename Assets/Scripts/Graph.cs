@@ -23,8 +23,8 @@ public class Graph : MonoBehaviour
         ResetGraph();
             
         _points = new Transform[_pointsCount * _pointsCount];
-        _divisor = _pointsCount / 2f;
-        var scale = Vector3.one * _scale / _divisor;
+        _divisor = 2f / _pointsCount;
+        var scale = Vector3.one * (_scale);
             
         for (int i = 0; i < _pointsCount * _pointsCount; i++)
         {
@@ -48,10 +48,10 @@ public class Graph : MonoBehaviour
             {
                 x = 0;
                 z += 1;
-                v = (z + 0.5f) / _divisor - 1;
+                v = (z + 0.5f) * _divisor - 1;
             }
                 
-            var u = (x + 0.5f) / _divisor - 1;
+            var u = (x + 0.5f) * _divisor - 1;
             var point = _points[i];
             var outputPosition = _function(u, v, time);
             point.localPosition = outputPosition;

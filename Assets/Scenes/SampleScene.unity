@@ -341,7 +341,7 @@ GameObject:
   - component: {fileID: 1588507145}
   - component: {fileID: 1588507144}
   m_Layer: 0
-  m_Name: CakePlotterGpu
+  m_Name: PlotterGpu
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -360,12 +360,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _functionShader: {fileID: 7200000, guid: 8d48a5008c3c8664eadc961d13d82122, type: 3}
-  _scale: 1
-  _pointsCount: 100
+  _scale: 0.1
+  _pointsCount: 200
   _functionType: 0
   _speed: 1
   _mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
-  _material: {fileID: 2100000, guid: 021f6ef2fa4ac1145a115d0a1ffc3fcf, type: 2}
+  _material: {fileID: 2100000, guid: a2cd8f86b21ce0b40b5e1e79f5da710d, type: 2}
 --- !u!4 &1588507145
 Transform:
   m_ObjectHideFlags: 0
@@ -374,7 +374,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1588507143}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 18.518469, y: -11.356476, z: -33.750187}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -391,7 +391,7 @@ GameObject:
   - component: {fileID: 2135040002}
   - component: {fileID: 2135040001}
   m_Layer: 0
-  m_Name: CatlikePlotter
+  m_Name: Plotter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -409,10 +409,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6207ddb65f449728aba50316a14eeec, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _scale: 1.5
-  _pointsCount: 100
+  _scale: 0.1
+  _pointsCount: 20
   _pointPrefab: {fileID: 3593535317279458060, guid: 4ac0b83613cdef440a74c14d0c595eb2, type: 3}
-  _functionType: 5
+  _functionType: 0
   _speed: 1
   _isTransitionEnabled: 0
   _transitionTime: 1

@@ -1,4 +1,9 @@
-﻿#pragma kernel FunctionKernel
+﻿#pragma kernel WaveKernel
+#pragma kernel MultiWaveKernel
+#pragma kernel RippleKernel
+#pragma kernel SphereKernel
+#pragma kernel TorusKernel
+#pragma kernel TorusAwesomeKernel
 
 #define PI 3.14159265358979323846
 
@@ -15,7 +20,75 @@ float3 Wave(float u, float v, float t)
     p.z = v;
 
     return p;
-} 
+}
+                                                                                
+                                                                                    
+float3 MultiWave(float u, float v, float t)                         
+{                                                                                   
+    float3 p;                                                                      
+                                                                                    
+    p.x = u;                                                                        
+                                                                                    
+    p.y = sin(PI * (u + t));                                            
+    p.y += sin(2.0 * PI * (v + t)) * 0.5;                                
+    p.y += sin(PI * (u + v + 0.25 * t));                               
+    p.y *= 2.0 / 3.0;                                                                  
+                                                                                    
+    p.z = v;                                                                        
+                                                                                    
+    return p;                                                                       
+}                                                                                   
+                                                                                    
+float3 Ripple(float u, float v, float t)                            
+{                                                                                   
+    float3 p;                                                                      
+                                                                                    
+    p.x = u;                                                                        
+                                                                                    
+    float d = sqrt(u * u + v * v);                                              
+    p.y  = sin(PI * (4.0 * d - t)) / (1.0 + 10.0 * d);                     
+                                                                                    
+    p.z = v;                                                                        
+                                                                                    
+    return p;                                                                       
+}                                                                                   
+                                                                                    
+float3 Sphere(float u, float v, float t)                            
+{                                                                                   
+    float3 p;                                                                      
+                                                                                    
+    float r = cos(v * PI / 2.0);                                            
+    p.x = r * sin(PI * u);                                              
+    p.y = sin(v * PI / 2.0);                                              
+    p.z = r * cos(PI * u);                                              
+                                                                                    
+    return p;                                                                       
+}                                                                                   
+                                                                                    
+float3 Torus(float u, float v, float t)                             
+{                                                                                   
+    float3 p;                                                                      
+    float rOuter = 0.7 + 0.1 * sin(PI * (6.0 * u + 0.5 * t));           
+    float rWidth = 0.15 + 0.05 * sin(PI * (8.0 * u + 4.0 * v + 2.0 * t));  
+    float s = rOuter + rWidth * cos(v * PI);                              
+    p.x = s * sin(PI * u);                                              
+    p.y = rWidth * sin(v * PI);                                         
+    p.z = s * cos(PI * u);                                              
+                                                                                    
+    return p;                                                                       
+}                                                                                   
+                                                                                    
+float3 TorusAwesome(float u, float v, float t)                      
+{                                                                                   
+    float3 p;                                                                      
+    float r = cos(PI * 2.0 * v + t);                                        
+    float s = 0.05f + 0.6f + r * cos(v * PI);                             
+    p.x = s * sin(PI * u);                                              
+    p.y = r * sin(v * PI);                                              
+    p.z = s * cos(PI * u);                                              
+                                                                                    
+    return p;                                                                       
+}                                                                                   
 
 float2 GetUV(uint3 id)
 {
@@ -30,14 +103,18 @@ void SetPosition(uint3 id, float3 position)
     }
 }
 
-[numthreads(8,8,1)]
-void FunctionKernel(uint3 id: SV_DispatchThreadID)
-{
-    float2 uv = GetUV(id);
-    float3 position = Wave(uv.x, uv.y, _Time);
-    SetPosition(id, position);
+#define KERNEL_FUNCTION(function)\
+[numthreads(8,8,1)]\
+void function##Kernel(uint3 id: SV_DispatchThreadID)\
+{\
+float2 uv = GetUV(id);\
+float3 position = function(uv.x, uv.y, _Time);\
+SetPosition(id, position);\
 }
 
-
-
-    
+KERNEL_FUNCTION(Wave)
+KERNEL_FUNCTION(MultiWave)
+KERNEL_FUNCTION(Ripple)
+KERNEL_FUNCTION(Sphere)
+KERNEL_FUNCTION(Torus)
+KERNEL_FUNCTION(TorusAwesome)
