@@ -10,6 +10,7 @@ public class GpuGraph : MonoBehaviour
     [SerializeField] private int _pointsCount = 100;
     [SerializeField] private FunctionType _firstFunctionType;
     [SerializeField] private FunctionType _secondFunctionType;
+    [SerializeField] private TransitionMode _transitionMode;
     [SerializeField] private float _transitionTime = 1;
     [SerializeField] private float _functionShowingTime = 1;
     [SerializeField] private float _speed = 1;
@@ -33,8 +34,17 @@ public class GpuGraph : MonoBehaviour
 
     public void OnEnable()
     {
-        _firstFunctionId = (int) _firstFunctionType;
-        _secondFunctionId = (int) _secondFunctionType;
+        if (_transitionMode == TransitionMode.Cycle)
+        {
+            _firstFunctionId = 0;
+            _secondFunctionId = 1;
+        }
+        else
+        {
+            _firstFunctionId = (int) _firstFunctionType;
+            _secondFunctionId = (int) _secondFunctionType;
+        }
+        
         _stopwatch = new Stopwatch();
         _stopwatch.Start();
         
@@ -49,7 +59,7 @@ public class GpuGraph : MonoBehaviour
 
     private void UpdateFunctionOnGPU()
     { 
-        if (!_isTransitionOn)
+        if (!_isTransitionOn || _firstFunctionId == _secondFunctionId)
         {
             _isTransitioning = false;
         }
@@ -62,19 +72,26 @@ public class GpuGraph : MonoBehaviour
         {
             _stopwatch.Restart();
             _isTransitioning = false;
-            var firstFunc = _firstFunctionId;
-            _firstFunctionId = _secondFunctionId;
-            _secondFunctionId = firstFunc;
+            if (_transitionMode == TransitionMode.Cycle)
+            {
+                _firstFunctionId = _secondFunctionId;
+                _secondFunctionId = (_firstFunctionId + 1) % FunctionLib.FuncTypes.Length;
+            }
+            else
+            {
+                var firstFunc = _firstFunctionId;
+                _firstFunctionId = _secondFunctionId;
+                _secondFunctionId = firstFunc;
+            }
         }
         
-        var kernelIndex = _firstFunctionId;
-
+        var kernelIndex = _firstFunctionId * FunctionLib.FuncTypes.Length;
         
         //TODO add proper transitioning, random, cycling functions, play with higher frequency / graph resolution
         if (_isTransitioning)
         {
-            
-            kernelIndex = _firstFunctionId * 6 + _secondFunctionId;
+            var secondId = _secondFunctionId < _firstFunctionId ? _secondFunctionId + 1 : _secondFunctionId;
+            kernelIndex = _firstFunctionId * FunctionLib.FuncTypes.Length + secondId;
         }
         
         var time = Time.time * _speed;
@@ -104,4 +121,11 @@ public class GpuGraph : MonoBehaviour
         _positionsBuffer.Release();
         _positionsBuffer = null;
     }
+}
+
+public enum TransitionMode
+{
+    Choice,
+    Cycle,
+    Random
 }

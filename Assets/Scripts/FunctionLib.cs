@@ -4,7 +4,7 @@ using static UnityEngine.Mathf;
 
 public static class FunctionLib
 {
-    private static readonly Func<float, float, float, Vector3>[] FuncTypes = 
+    public static readonly Func<float, float, float, Vector3>[] FuncTypes = 
         { Wave, MultiWave, Ripple, Sphere, Torus, TorusAwesome };
         
     public static Func<float, float, float, Vector3> GetFunction(FunctionType functionType) => 

@@ -34,11 +34,11 @@
 #pragma kernel TorusToTorusAwesomeKernel
 
 #pragma kernel TorusAwesomeKernel
-#pragma kernel TorusAwesomeKernelToWaveKernel
-#pragma kernel TorusAwesomeKernelToMultiWaveKernel
-#pragma kernel TorusAwesomeKernelToRippleKernel
-#pragma kernel TorusAwesomeKernelToSphereKernel
-#pragma kernel TorusAwesomeKernelToTorus
+#pragma kernel TorusAwesomeToWaveKernel
+#pragma kernel TorusAwesomeToMultiWaveKernel
+#pragma kernel TorusAwesomeToRippleKernel
+#pragma kernel TorusAwesomeToSphereKernel
+#pragma kernel TorusAwesomeToTorusKernel
 
 #define PI 3.14159265358979323846
 
@@ -148,7 +148,7 @@ SetPosition(id, position);\
 
 #define KERNEL_MORPH_FUNCTION(functionA, functionB)\
 [numthreads(8,8,1)]\
-void functionA##to##functionB##Kernel(uint3 id: SV_DispatchThreadID)\
+void functionA##To##functionB##Kernel(uint3 id: SV_DispatchThreadID)\
 {\
 float2 uv = GetUV(id);\
 float3 firstOutput = functionA(uv.x, uv.y, _Time);\

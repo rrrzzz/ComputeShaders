@@ -311,7 +311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_RenderShadows: 1
+  m_RenderShadows: 0
   m_RequiresDepthTextureOption: 2
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
@@ -322,7 +322,7 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_RenderPostProcessing: 1
-  m_Antialiasing: 0
+  m_Antialiasing: 2
   m_AntialiasingQuality: 2
   m_StopNaN: 1
   m_Dithering: 1
@@ -346,7 +346,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1588507144
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -360,12 +360,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _functionShader: {fileID: 7200000, guid: 8d48a5008c3c8664eadc961d13d82122, type: 3}
-  _scale: 0.01
+  _scale: 0.05
   _pointsCount: 1000
-  _functionType: 5
+  _firstFunctionType: 0
+  _secondFunctionType: 2
+  _transitionMode: 1
+  _transitionTime: 3
+  _functionShowingTime: 0.01
   _speed: 1
   _mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
   _material: {fileID: 2100000, guid: a2cd8f86b21ce0b40b5e1e79f5da710d, type: 2}
+  _isTransitionOn: 1
 --- !u!4 &1588507145
 Transform:
   m_ObjectHideFlags: 0
@@ -444,7 +449,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &2135040001
 MonoBehaviour:
   m_ObjectHideFlags: 0
