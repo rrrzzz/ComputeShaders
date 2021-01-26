@@ -1,12 +1,17 @@
 using System.Diagnostics;
 using UnityEngine;
+using UnityEngine.UI;
+using Random = UnityEngine.Random;
 
 public class GpuGraph : MonoBehaviour
 {
-    private const int MaxResolution = 1000;
+    private const int MaxResolution = 2000;
+    private const float TransparentScale = 0.0006f;
+    private const float OpaqueScale = 0.009f;
+    
     [SerializeField] private ComputeShader _functionShader;
     [SerializeField] private float _scale = 1;
-    [Range(8, 1000)]
+    [Range(8, MaxResolution)]
     [SerializeField] private int _pointsCount = 100;
     [SerializeField] private FunctionType _firstFunctionType;
     [SerializeField] private FunctionType _secondFunctionType;
@@ -17,6 +22,8 @@ public class GpuGraph : MonoBehaviour
     [SerializeField] private Mesh _mesh;
     [SerializeField] private Material _material;
     [SerializeField] private bool _isTransitionOn = true;
+    [SerializeField] private Toggle _toggle;
+    
         
     private readonly int _timeId = Shader.PropertyToID("_Time");
     private readonly int _stepId = Shader.PropertyToID("_Step");
@@ -32,17 +39,31 @@ public class GpuGraph : MonoBehaviour
     private int _firstFunctionId;
     private int _secondFunctionId;
 
+    private void Awake()
+    {
+        _toggle.onValueChanged.AddListener(isOn => _scale = isOn ? TransparentScale : OpaqueScale); 
+    }
+
     public void OnEnable()
     {
-        if (_transitionMode == TransitionMode.Cycle)
+        switch (_transitionMode)
         {
-            _firstFunctionId = 0;
-            _secondFunctionId = 1;
-        }
-        else
-        {
-            _firstFunctionId = (int) _firstFunctionType;
-            _secondFunctionId = (int) _secondFunctionType;
+            case TransitionMode.Cycle:
+                _firstFunctionId = 0;
+                _secondFunctionId = 1;
+                break;
+            case TransitionMode.Random:
+                _firstFunctionId = (int)_firstFunctionType;
+                var index = Random.Range(0, FunctionLib.FuncTypes.Length);
+                if (index == _firstFunctionId) index = ++index % FunctionLib.FuncTypes.Length;
+                _secondFunctionId = index;
+                break;
+            case TransitionMode.Choice:
+            {
+                _firstFunctionId = (int)_firstFunctionType;
+                _secondFunctionId = (int)_secondFunctionType;
+                break;
+            }
         }
         
         _stopwatch = new Stopwatch();
@@ -51,13 +72,8 @@ public class GpuGraph : MonoBehaviour
         _divisor = 2f / _pointsCount;
         _positionsBuffer = new ComputeBuffer(MaxResolution * MaxResolution, 3 * 4);
     }
-
+    
     private void Update()
-    {
-        UpdateFunctionOnGPU();
-    }
-
-    private void UpdateFunctionOnGPU()
     { 
         if (!_isTransitionOn || _firstFunctionId == _secondFunctionId)
         {
@@ -72,22 +88,30 @@ public class GpuGraph : MonoBehaviour
         {
             _stopwatch.Restart();
             _isTransitioning = false;
-            if (_transitionMode == TransitionMode.Cycle)
+            switch (_transitionMode)
             {
-                _firstFunctionId = _secondFunctionId;
-                _secondFunctionId = (_firstFunctionId + 1) % FunctionLib.FuncTypes.Length;
-            }
-            else
-            {
-                var firstFunc = _firstFunctionId;
-                _firstFunctionId = _secondFunctionId;
-                _secondFunctionId = firstFunc;
+                case TransitionMode.Cycle:
+                    _firstFunctionId = _secondFunctionId;
+                    _secondFunctionId = (_firstFunctionId + 1) % FunctionLib.FuncTypes.Length;
+                    break;
+                case TransitionMode.Random:
+                    _firstFunctionId = _secondFunctionId;
+                    var index = Random.Range(0, FunctionLib.FuncTypes.Length);
+                    if (index == _firstFunctionId) index = ++index % FunctionLib.FuncTypes.Length;
+                    _secondFunctionId = index;
+                    break;
+                case TransitionMode.Choice:
+                {
+                    var firstFunc = _firstFunctionId;
+                    _firstFunctionId = _secondFunctionId;
+                    _secondFunctionId = firstFunc;
+                    break;
+                }
             }
         }
         
         var kernelIndex = _firstFunctionId * FunctionLib.FuncTypes.Length;
         
-        //TODO add proper transitioning, random, cycling functions, play with higher frequency / graph resolution
         if (_isTransitioning)
         {
             var secondId = _secondFunctionId < _firstFunctionId ? _secondFunctionId + 1 : _secondFunctionId;

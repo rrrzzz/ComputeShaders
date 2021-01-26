@@ -80,7 +80,7 @@ float3 Ripple(float u, float v, float t)
     p.x = u;                                                                        
                                                                                     
     float d = sqrt(u * u + v * v);                                              
-    p.y  = sin(PI * (4.0 * d - t)) / (1.0 + 10.0 * d);                     
+    p.y  = sin(PI * (4.0 * d - t)) / (2.0 + 30.0 * d);                     
                                                                                     
     p.z = v;                                                                        
                                                                                     
@@ -91,26 +91,40 @@ float3 Sphere(float u, float v, float t)
 {                                                                                   
     float3 p;
 
-    float r = cos(0.5f * PI * v);
-    p.x = r * sin(PI * u);
-    p.y = sin(0.5f * PI * v);
-    p.z = r * cos(PI * u);
+    float r = 0.9 + 0.1 * sin(PI * (12.0 * u + 8.0 * v + t));
+    float s = r * cos(0.5 * PI * v);
+    p.x = s * sin(PI * u);
+    p.y = r * sin(0.5f * PI * v);
+    p.z = s * cos(PI * u);
             
     return p;                                                            
 }                                                                                   
-                                                                                    
+//                                                                                     
+// float3 Torus(float u, float v, float t)                             
+// {                                                                                   
+//     float3 p;                                                                      
+//     float rOuter = 0.7 + 0.1 * sin(PI * (6.0 * u + 0.5 * t));           
+//     float rWidth = 0.15 + 0.05 * sin(PI * (8.0 * u + 4.0 * v + 2.0 * t));  
+//     float s = rOuter + rWidth * cos(v * PI);                              
+//     p.x = s * sin(PI * u);                                              
+//     p.y = rWidth * sin(v * PI);                                         
+//     p.z = s * cos(PI * u);                                              
+//                                                                                     
+//     return p;                                                                       
+// }
+
 float3 Torus(float u, float v, float t)                             
 {                                                                                   
     float3 p;                                                                      
-    float rOuter = 0.7 + 0.1 * sin(PI * (6.0 * u + 0.5 * t));           
-    float rWidth = 0.15 + 0.05 * sin(PI * (8.0 * u + 4.0 * v + 2.0 * t));  
-    float s = rOuter + rWidth * cos(v * PI);                              
+    float r1 = 0.7 + 0.1 * sin(PI * (16.0 * u + 1.0 * t));
+    float r2 = 0.15 + 0.05 * sin(PI * (32.0 * u + 8.0 * v + 6.0 * t));
+    float s = r1 + r2 * cos(v * PI);                              
     p.x = s * sin(PI * u);                                              
-    p.y = rWidth * sin(v * PI);                                         
+    p.y = r2 * sin(v * PI);                                         
     p.z = s * cos(PI * u);                                              
                                                                                     
     return p;                                                                       
-}                                                                                   
+}  
                                                                                     
 float3 TorusAwesome(float u, float v, float t)                      
 {                                                                                   
