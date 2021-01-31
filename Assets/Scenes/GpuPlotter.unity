@@ -600,7 +600,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _functionShader: {fileID: 7200000, guid: 8d48a5008c3c8664eadc961d13d82122, type: 3}
   _scale: 0.01
-  _pointsCount: 1000
+  _pointsCount: 200
   _firstFunctionType: 4
   _secondFunctionType: 2
   _transitionMode: 2
